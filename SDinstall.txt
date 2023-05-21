@@ -1,0 +1,86 @@
+python 3.10.6 설치
+git 설치
+Anaconda 설치
+아나콘다 설치 위치는 “C:\Users\<ig>Anaconda3” 로 해야 합니다. 이렇게 하지 않으면  파이참에서 아나콘다의 위치를 찾지 못하는 경우가 생기기 때문입니다.
+pip upgrade
+
+D:\SD\stable-diffusion-webui\venv\Scripts\python.exe -m pip install --upgrade pip
+
+
+
+pytorch 설치 (gpu 가속기)
+
+준비 
+1.  cuda 11.8  설치
+https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Windows&target_arch=x86_64&target_version=10&target_type=exe_local
+cuda_11.8.0_522.06_windows.exe를 두 번 클릭합니다.
+
+ 2.  cuda 11.x용  cuDNN
+https://developer.nvidia.com/rdp/cudnn-archive 다운한것
+
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8 로 복사해넣는다.
+
+설치
+1. Anaconda Prompt  마우스 우클릭-관리자권한으로실행 으로 켠다
+(base) C:\>conda create -n ig python=3.10.6
+(base) C:\>activate ig
+(ig) C:\Users\ig>
+
+2.  https://pytorch.org/get-started/locally/ 사이트 이동
+    여기서 코드스니퍼 따서 복붙 (conda용, pip용 선택가능)
+
+3. (ig) C:\Users\ig>conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
+   시간걸림. 20분정
+
+
+확인
+python
+import torch
+torch.cuda.get_device_name(0)
+torch.cuda.is_available()
+print(torch.__version__)
+
+(ig) C:\Windows\system32>python
+Python 3.10.6 | packaged by conda-forge | (main, Oct 24 2022, 16:02:16) [MSC v.1916 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import torch
+>>> torch.cuda.get_device_name(0)
+'NVIDIA GeForce GTX 1650 SUPER'
+>>> torch.cuda.is_available()
+True
+>>> print(torch.__version__)
+2.0.1
+>>>
+
+4. webui_user.bat 수정
+
+@echo off
+
+set PYTHON=
+set GIT=
+set VENV_DIR=
+set COMMANDLINE_ARGS=--xformers --deepdanbooru --autolaunch --theme dark
+
+call webui.bat
+
+D:\SD\stable-diffusion-webui\models\Stable-diffusion 폴더에 
+  모델파일  v1-5-pruned-emaonly.safetensors 복사해넣기
+
+5.실행 webui_user.bat
+
+
+[extensions url]설치
+
+AI-WEBUI-scripts-Random	https://github.com/mkco5162/AI-WEBUI-scripts-Random	
+Stable-Diffusion-Webui-Civitai-Helper	https://github.com/butaixianran/Stable-Diffusion-Webui-Civitai-Helper.git		
+sd-dynamic-prompts	https://github.com/adieyal/sd-dynamic-prompts	
+sd-webui-ar	https://github.com/alemelis/sd-webui-ar.git	
+sd-webui-controlnet	https://github.com/Mikubill/sd-webui-controlnet.git	
+sd-webui-ddsd	https://github.com/NeoGraph-K/sd-webui-ddsd.git
+stable-diffusion-webui-images-browser	https://github.com/yfszzx/stable-diffusion-webui-images-browser	
+stable-diffusion-webui-localization-ko_KR	https://github.com/36DB/stable-diffusion-webui-localization-ko_KR.git		
+tag-autocomplete	https://github.com/DominikDoom/a1111-sd-webui-tagcomplete
+
+
+[user interface] 배열
+sd_model_checkpoint, sd_vae,  CLIP_stop_at_last_layers , sd_hypernetwork
